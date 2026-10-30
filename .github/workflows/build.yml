@@ -15,7 +15,8 @@ jobs:
         uses: microsoft/setup-msbuild@v2
 
       - name: Build KeyCastOW
-       run: msbuild keycastow.vcxproj /m /p:Platform=Win32 /p:Configuration=Release /p:PlatformToolset=v180
+        shell: cmd
+        run: msbuild keycastow.vcxproj /m /p:Platform=Win32 /p:Configuration=Release /p:PlatformToolset=v180
 
       - name: Find executable
         shell: pwsh
