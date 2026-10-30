@@ -1,0 +1,31 @@
+name: Build KeyCastOW
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Build KeyCastOW
+        run: msbuild keycastow.vcxproj /m /p:Platform=Win32 /p:Configuration=Release
+
+      - name: Find executable
+        shell: pwsh
+        run: |
+          $exe = Get-ChildItem -Path . -Filter keycastow.exe -Recurse -File | Select-Object -First 1
+          if (-not $exe) { throw "keycastow.exe not found" }
+          "EXE_PATH=$($exe.FullName)" >> $env:GITHUB_ENV
+
+      - name: Upload executable
+        uses: actions/upload-artifact@v4
+        with:
+          name: KeyCastOW-Windows-exe
+          path: ${{ env.EXE_PATH }}
