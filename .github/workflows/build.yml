@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: windows-2022
 
     steps:
       - name: Checkout source
@@ -16,7 +16,7 @@ jobs:
 
       - name: Build KeyCastOW
         shell: cmd
-        run: msbuild keycastow.vcxproj /m /p:Platform=Win32 /p:Configuration=Release /p:PlatformToolset=v180
+        run: msbuild keycastow.vcxproj /m /p:Platform=Win32 /p:Configuration=Release /p:PlatformToolset=v143
 
       - name: Find executable
         shell: pwsh
